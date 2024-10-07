@@ -1,0 +1,35 @@
+create table alunos(
+    id int primary key auto_increment,
+    nome varchar(30),
+    sexo enum("M","F"),
+    nivel_ensino enum("medio","fundamental"),
+    id_info int not null
+);
+
+create table info(
+    id int primary key auto_increment,
+    hrs_estudadas_dia double,
+    materia_preferida int not null,
+    materia_dificuldade int not null
+);
+
+create table materia(
+    id int primary key auto_increment,
+    nome varchar(20),
+    descricao text
+);
+
+create table alunos_notas(
+    id int primary key auto_increment,
+    id_aluno int,
+    id_materia int,
+    nota double
+);
+
+alter table alunos add constraint fkinfoid foreign key alunos(id_info) references info(id);
+
+alter table info add constraint fkmateriapref foreign key info(materia_preferida) references materia(id);
+alter table info add constraint fkmateriadiff foreign key info(materia_dificuldade) references materia(id);
+
+alter table alunos_notas add constraint fkalunosid foreign key alunos_notas(id_aluno) references alunos(id);
+alter table alunos_notas add constraint fkmateriasid foreign key alunos_notas(id_materia) references materia(id);
